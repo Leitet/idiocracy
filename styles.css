@@ -1,0 +1,416 @@
+/* ============================================================
+   WHEN IDIOCRACY — Brawndo-flavoured dystopian stylesheet
+   ============================================================ */
+
+:root {
+  --brawndo: #c7ff1f;       /* electrolyte green */
+  --brawndo-deep: #94c800;
+  --hazard: #ffd400;        /* warning yellow */
+  --electric: #19e6ff;      /* TV-blue */
+  --blood: #ff2a2a;         /* Carl's Jr. red */
+  --ink: #0a0d0f;           /* tarmac */
+  --ink-2: #13181b;
+  --ash: #1f272b;
+  --bone: #f5efe0;          /* newsprint */
+  --glow: 0 0 14px rgba(199, 255, 31, 0.55);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--ink);
+  color: var(--bone);
+  font-family: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  overflow-x: hidden;
+}
+
+/* Scanline crust over the whole page — makes it feel like a CRT feed */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0,0,0,0) 0px,
+    rgba(0,0,0,0) 2px,
+    rgba(0,0,0,0.15) 3px,
+    rgba(0,0,0,0) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: multiply;
+}
+
+/* Vignette */
+body::after {
+  content: "";
+  position: fixed; inset: 0;
+  background: radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.7) 100%);
+  pointer-events: none;
+  z-index: 9998;
+}
+
+a { color: var(--electric); text-decoration: none; }
+a:hover { color: var(--brawndo); }
+
+/* ============================================================
+   HAZARD STRIPES (top + bottom)
+   ============================================================ */
+.hazard {
+  height: 22px;
+  background: repeating-linear-gradient(
+    135deg,
+    var(--hazard) 0 24px,
+    var(--ink) 24px 48px
+  );
+  position: relative;
+  z-index: 2;
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+.hero {
+  position: relative;
+  padding: 80px 24px 40px;
+  text-align: center;
+  background:
+    radial-gradient(circle at 20% 20%, rgba(199,255,31,0.12), transparent 40%),
+    radial-gradient(circle at 80% 60%, rgba(25,230,255,0.08), transparent 40%),
+    linear-gradient(180deg, #0c1013 0%, #0a0d0f 100%);
+  overflow: hidden;
+}
+
+.hero .stamp {
+  display: inline-block;
+  padding: 4px 14px;
+  border: 2px solid var(--brawndo);
+  color: var(--brawndo);
+  font-family: 'Bungee', 'Archivo Black', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  transform: rotate(-2deg);
+  margin-bottom: 18px;
+  text-shadow: var(--glow);
+}
+
+.hero h1 {
+  font-family: 'Bungee', 'Archivo Black', sans-serif;
+  font-size: clamp(48px, 9vw, 120px);
+  line-height: 0.95;
+  letter-spacing: -0.02em;
+  color: var(--bone);
+  text-shadow:
+    3px 3px 0 var(--blood),
+    6px 6px 0 var(--ink);
+}
+.hero h1 .when { color: var(--hazard); }
+.hero h1 .idiocracy {
+  color: var(--brawndo);
+  text-shadow:
+    3px 3px 0 var(--blood),
+    6px 6px 0 var(--ink),
+    0 0 22px rgba(199,255,31,0.5);
+}
+
+.hero .tagline {
+  margin-top: 14px;
+  font-family: 'Bungee Inline', 'Archivo Black', sans-serif;
+  color: var(--bone);
+  font-size: clamp(13px, 1.6vw, 18px);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+.hero .intro {
+  max-width: 720px;
+  margin: 28px auto 0;
+  font-size: 16px;
+  line-height: 1.55;
+  color: #cfd3d1;
+}
+
+/* ============================================================
+   TOTAL SCORE — giant gauge
+   ============================================================ */
+.total {
+  margin: 48px auto 0;
+  max-width: 720px;
+  padding: 28px 28px 32px;
+  border: 3px solid var(--brawndo);
+  background: linear-gradient(180deg, rgba(199,255,31,0.08), rgba(199,255,31,0.02));
+  border-radius: 6px;
+  position: relative;
+  box-shadow: var(--glow), inset 0 0 60px rgba(199,255,31,0.08);
+}
+.total::before {
+  content: "OFFICIAL IDIOCRACY INDEX";
+  position: absolute;
+  top: -12px; left: 24px;
+  background: var(--ink);
+  color: var(--brawndo);
+  padding: 0 10px;
+  font-family: 'Bungee', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.25em;
+}
+.total .big {
+  font-family: 'Bungee', 'Archivo Black', sans-serif;
+  font-size: clamp(72px, 14vw, 160px);
+  line-height: 1;
+  color: var(--brawndo);
+  text-shadow: var(--glow);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 6px;
+}
+.total .big .pct {
+  font-size: 0.45em;
+  color: var(--hazard);
+  margin-bottom: 0.15em;
+}
+.total .label {
+  text-align: center;
+  margin-top: 10px;
+  font-family: 'Bungee Inline', 'Archivo Black', sans-serif;
+  letter-spacing: 0.2em;
+  font-size: 14px;
+  color: var(--bone);
+}
+.total .verdict {
+  text-align: center;
+  margin-top: 14px;
+  color: var(--hazard);
+  font-weight: 700;
+  font-size: 15px;
+  min-height: 1.4em;
+}
+
+/* ============================================================
+   TELLS
+   ============================================================ */
+.tells {
+  max-width: 1100px;
+  margin: 80px auto 40px;
+  padding: 0 24px;
+  display: grid;
+  gap: 28px;
+}
+
+.tell {
+  position: relative;
+  padding: 22px 26px 28px;
+  background: var(--ink-2);
+  border: 1px solid #2a3338;
+  border-left: 4px solid var(--brawndo);
+  border-radius: 4px;
+  box-shadow: 0 4px 30px rgba(0,0,0,0.5);
+}
+
+.tell .idx {
+  position: absolute;
+  top: -14px; left: 14px;
+  background: var(--brawndo);
+  color: var(--ink);
+  font-family: 'Bungee', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.15em;
+  padding: 3px 10px;
+  border-radius: 2px;
+}
+
+.tell h2 {
+  font-family: 'Bungee', 'Archivo Black', sans-serif;
+  color: var(--bone);
+  font-size: clamp(20px, 2.6vw, 28px);
+  line-height: 1.05;
+  text-transform: uppercase;
+  margin-top: 6px;
+}
+
+.tell .quote {
+  margin-top: 8px;
+  color: #8a9096;
+  font-style: italic;
+  font-size: 14px;
+  line-height: 1.4;
+  border-left: 2px solid #3a4349;
+  padding-left: 12px;
+}
+
+/* --- progress bar --- */
+.bar-wrap {
+  margin-top: 22px;
+  position: relative;
+  padding: 28px 0 40px; /* room for label + scale */
+}
+
+.bar {
+  position: relative;
+  height: 18px;
+  background: repeating-linear-gradient(
+    90deg,
+    #0f1417 0 8px,
+    #13191d 8px 16px
+  );
+  border: 1px solid #2a3338;
+  border-radius: 2px;
+  overflow: visible;
+}
+
+.bar .fill {
+  position: absolute;
+  top: 0; left: 0; bottom: 0;
+  width: 0%;
+  background: linear-gradient(90deg,
+    var(--brawndo-deep) 0%,
+    var(--brawndo) 50%,
+    var(--hazard) 85%,
+    var(--blood) 100%);
+  box-shadow: 0 0 18px rgba(199,255,31,0.5);
+  transition: width 2s cubic-bezier(.2,.9,.25,1);
+  border-radius: 2px;
+}
+
+.bar-wrap .scale {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+  font-family: 'Bungee', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #5a6368;
+  pointer-events: none;
+}
+
+/* --- stars --- */
+.star {
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  width: 26px;
+  height: 26px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  opacity: 0;
+  transition: transform .4s cubic-bezier(.5,1.8,.5,1), opacity .3s;
+  z-index: 2;
+}
+.star.lit { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+.star:hover { transform: translate(-50%, -50%) scale(1.35); }
+
+.star svg { width: 22px; height: 22px; display: block; }
+.star svg path {
+  fill: var(--hazard);
+  stroke: var(--ink);
+  stroke-width: 1;
+  filter: drop-shadow(0 0 6px rgba(255,212,0,0.9));
+}
+
+.star .card {
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%);
+  width: 260px;
+  background: var(--bone);
+  color: var(--ink);
+  padding: 10px 12px;
+  font-size: 12px;
+  line-height: 1.35;
+  border-radius: 3px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.6);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .15s;
+  z-index: 10;
+}
+.star:hover .card { opacity: 1; }
+.star .card::after {
+  content: "";
+  position: absolute;
+  top: 100%; left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: var(--bone);
+}
+.star .card .src {
+  display: inline-block;
+  background: var(--blood);
+  color: var(--bone);
+  font-family: 'Bungee', sans-serif;
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  padding: 2px 6px;
+  margin-bottom: 6px;
+}
+.star .card .t { font-weight: 700; }
+
+/* --- tell footer --- */
+.tell-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-top: 6px;
+  font-family: 'Bungee', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: #8a9096;
+}
+.tell-foot .score {
+  color: var(--brawndo);
+  font-size: 18px;
+  text-shadow: var(--glow);
+}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+footer {
+  margin-top: 60px;
+  padding: 40px 24px 80px;
+  text-align: center;
+  font-size: 13px;
+  color: #6b7378;
+  line-height: 1.6;
+}
+footer .carls {
+  display: inline-block;
+  margin-top: 12px;
+  padding: 6px 12px;
+  border: 2px solid var(--blood);
+  color: var(--blood);
+  font-family: 'Bungee', sans-serif;
+  letter-spacing: 0.15em;
+  font-size: 11px;
+}
+
+/* ============================================================
+   ANIMATIONS
+   ============================================================ */
+@keyframes flicker {
+  0%, 96%, 100% { opacity: 1; }
+  97% { opacity: 0.4; }
+  98% { opacity: 1; }
+  99% { opacity: 0.6; }
+}
+.hero h1 .idiocracy { animation: flicker 6s infinite; }
+
+@keyframes pulse {
+  0%, 100% { box-shadow: var(--glow), inset 0 0 60px rgba(199,255,31,0.08); }
+  50%      { box-shadow: 0 0 28px rgba(199,255,31,0.9), inset 0 0 80px rgba(199,255,31,0.15); }
+}
+.total { animation: pulse 3.5s ease-in-out infinite; }
+
+/* Small screens */
+@media (max-width: 640px) {
+  .hero { padding-top: 54px; }
+  .star .card { width: 200px; }
+  .tells { margin-top: 48px; }
+}
