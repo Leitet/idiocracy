@@ -1,8 +1,17 @@
-// Render tells, stars, and animate the total score.
+// Render tells, stars (now lightning bolts), and animate the total score.
 
+// Brawndo-style lightning bolt — the movie's single most iconic visual.
 const STAR_SVG = `
 <svg viewBox="0 0 24 24" aria-hidden="true">
-  <path d="M12 1.5 L15 8.5 L22.5 9.3 L16.8 14.2 L18.5 21.5 L12 17.8 L5.5 21.5 L7.2 14.2 L1.5 9.3 L9 8.5 Z"/>
+  <path d="M14 1 L4 13 L10.5 13 L9 23 L20 10 L13 10 Z"/>
+</svg>`;
+
+// Easter-egg-only — a teeny Brawndo can for the brawndo-rain gag.
+const CAN_SVG = `
+<svg viewBox="0 0 20 32" aria-hidden="true">
+  <rect x="2" y="4" width="16" height="26" rx="2" ry="2" fill="#c7ff1f" stroke="#0a0d0f" stroke-width="1.5"/>
+  <rect x="2" y="4" width="16" height="4" fill="#94c800"/>
+  <path d="M7 14 L5 20 L9 20 L8 27 L14 18 L10 18 L12 14 Z" fill="#ffd400" stroke="#0a0d0f" stroke-width="0.8"/>
 </svg>`;
 
 function escapeHtml(s) {
@@ -209,8 +218,124 @@ function init() {
 
   wireStars();
   wireSubmitButton();
+  wireEasterEggs(total);
 
   document.getElementById("verdict").textContent = verdictFor(total);
+}
+
+/* ============================================================
+   EASTER EGGS — quotes, konami, brawndo rain, hash triggers.
+   ============================================================ */
+
+const SECRET_QUOTES = [
+  "Brawndo: the thirst mutilator.",
+  "I like money.",
+  "You talk like a fag, and your shit's all retarded.",
+  "I know shit's bad right now.",
+  "Ow, my balls.",
+  "Go away, 'batin'!",
+  "Welcome to Costco. I love you."
+];
+
+function flashToast(text) {
+  const t = document.createElement("div");
+  t.className = "toast";
+  t.textContent = text;
+  document.body.appendChild(t);
+  requestAnimationFrame(() => t.classList.add("on"));
+  setTimeout(() => {
+    t.classList.remove("on");
+    setTimeout(() => t.remove(), 400);
+  }, 2400);
+}
+
+function brawndoRain(duration = 3500) {
+  if (document.body.classList.contains("brawndo-mode")) return;
+  document.body.classList.add("brawndo-mode");
+  const root = document.createElement("div");
+  root.className = "rain";
+  document.body.appendChild(root);
+  const COUNT = 40;
+  for (let i = 0; i < COUNT; i++) {
+    const can = document.createElement("div");
+    can.className = "drop";
+    can.innerHTML = CAN_SVG;
+    can.style.left = (Math.random() * 100) + "vw";
+    can.style.animationDuration = (1.6 + Math.random() * 1.8) + "s";
+    can.style.animationDelay = (Math.random() * 0.8) + "s";
+    can.style.transform = `rotate(${Math.random() * 40 - 20}deg)`;
+    root.appendChild(can);
+  }
+  flashToast("IT'S GOT WHAT PLANTS CRAVE");
+  setTimeout(() => {
+    root.remove();
+    document.body.classList.remove("brawndo-mode");
+  }, duration);
+}
+
+function toggleNotSureMode() {
+  document.body.classList.toggle("not-sure");
+  flashToast(document.body.classList.contains("not-sure")
+    ? "NOT SURE IF MODE ENABLED..."
+    : "Mode: certain again.");
+}
+
+function wireEasterEggs(total) {
+  // 1. Type "brawndo" anywhere → electrolyte rain.
+  let buf = "";
+  const TARGETS = { "brawndo": brawndoRain, "batin": () => flashToast("GO AWAY, 'BATIN'!"), "camacho": () => flashToast("CAMACHO — FIVE-TIME SMACKDOWN CHAMPION!") };
+  document.addEventListener("keydown", (e) => {
+    if (e.key.length !== 1) return;
+    if (e.target && e.target.matches && e.target.matches("input, textarea")) return;
+    buf = (buf + e.key.toLowerCase()).slice(-12);
+    for (const [word, fn] of Object.entries(TARGETS)) {
+      if (buf.endsWith(word)) { fn(); buf = ""; return; }
+    }
+  });
+
+  // 2. Konami code → Not-Sure mode toggle.
+  const KONAMI = ["ArrowUp","ArrowUp","ArrowDown","ArrowDown","ArrowLeft","ArrowRight","ArrowLeft","ArrowRight","b","a"];
+  let kIdx = 0;
+  document.addEventListener("keydown", (e) => {
+    const want = KONAMI[kIdx];
+    const got = (e.key.length === 1) ? e.key.toLowerCase() : e.key;
+    if (got === want) {
+      kIdx++;
+      if (kIdx === KONAMI.length) { toggleNotSureMode(); kIdx = 0; }
+    } else {
+      kIdx = (got === KONAMI[0]) ? 1 : 0;
+    }
+  });
+
+  // 3. URL hash triggers.
+  function handleHash() {
+    const h = location.hash.slice(1).toLowerCase();
+    if (h === "batin") flashToast("GO AWAY, 'BATIN'!");
+    else if (h === "brawndo") brawndoRain();
+    else if (h === "notsure") toggleNotSureMode();
+  }
+  window.addEventListener("hashchange", handleHash);
+  handleHash();
+
+  // 4. Verdict cycles through movie lines on a long, forgiving interval.
+  const verdictEl = document.getElementById("verdict");
+  let showingSecret = false;
+  setInterval(() => {
+    if (!verdictEl || document.body.classList.contains("not-sure")) return;
+    if (showingSecret) {
+      verdictEl.textContent = verdictFor(total);
+    } else {
+      verdictEl.textContent = SECRET_QUOTES[Math.floor(Math.random() * SECRET_QUOTES.length)];
+    }
+    verdictEl.classList.add("blip");
+    setTimeout(() => verdictEl.classList.remove("blip"), 400);
+    showingSecret = !showingSecret;
+  }, 22000);
+
+  // 5. Console Easter egg.
+  const style = "background:#c7ff1f;color:#0a0d0f;padding:6px 10px;font-weight:900;font-size:14px;";
+  console.log("%c Welcome to Costco. I love you. ", style);
+  console.log("%c Try typing: brawndo · batin · camacho   — or press ↑↑↓↓←→←→BA ", "color:#ffd400;font-style:italic;");
 }
 
 // Pre-fill a GitHub issue when the user clicks "SUBMIT A STAR".

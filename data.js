@@ -289,5 +289,105 @@ const TELLS = [
         title: "AI companion apps (Replika, Character.ai) pivot to paid romantic roleplay",
         source: "Wikipedia — Replika", url: "https://en.wikipedia.org/wiki/Replika" }
     ]
+  },
+  {
+    id: "oscar-for-ass",
+    title: "'Ass' wins Best Picture — spectacle beats story",
+    movie: "The #1 film of 2505 is a 90-minute shot of a man's rear end. It sweeps the Oscars.",
+    trend: "rising",
+    stars: [
+      { pct: 42, date: "Dec 13, 2019",
+        title: "Michael Bay's '6 Underground' — 83M Netflix views despite 36% Rotten Tomatoes",
+        source: "Wikipedia", url: "https://en.wikipedia.org/wiki/6_Underground_(film)" },
+      { pct: 56, date: "Jul 21, 2023",
+        title: "Barbie — a toy-brand IP film — grosses $1.45B, #1 film of the year",
+        source: "Wikipedia", url: "https://en.wikipedia.org/wiki/Barbie_(film)" },
+      { pct: 66, date: "May 2024",
+        title: "Spotify purges 'tens of millions' of AI-generated tracks gaming charts",
+        source: "Reuters", url: "https://www.reuters.com/technology/spotify-looks-crack-down-ai-generated-music-2024-04-09/" },
+      { pct: 72, date: "2023–present",
+        title: "Netflix top-10 increasingly dominated by minimal-effort reality and 'slop' content",
+        source: "Wikipedia — Content farm", url: "https://en.wikipedia.org/wiki/Content_farm" }
+    ]
+  },
+  {
+    id: "kim-k-lawyer",
+    title: "Law degrees by TV commercial",
+    movie: "Frito Pendejo, attorney at law. Extracto will extract a settlement. Please call.",
+    trend: "rising",
+    stars: [
+      { pct: 38, date: "Dec 13, 2021",
+        title: "Kim Kardashian passes California 'baby bar' via non-traditional study route",
+        source: "BBC", url: "https://www.bbc.com/news/world-us-canada-59644068" },
+      { pct: 54, date: "May 27, 2023",
+        title: "NY lawyer Steven Schwartz files ChatGPT brief citing hallucinated cases",
+        source: "NYT", url: "https://www.nytimes.com/2023/05/27/nyregion/avianca-airline-lawsuit-chatgpt.html" },
+      { pct: 66, date: "2021–present",
+        title: "TikTok attorneys drive mass class-action sign-ups via viral clips",
+        source: "ABA Journal", url: "https://www.abajournal.com/web/article/tiktok-is-the-new-ambulance-lawyers-go-viral" },
+      { pct: 71, date: "Jun 22, 2023",
+        title: "Judges issue first standing orders banning AI-generated filings without disclosure",
+        source: "Reuters", url: "https://www.reuters.com/legal/transactional/more-us-judges-issue-rules-courtroom-use-generative-ai-2023-09-08/" }
+    ]
+  },
+  {
+    id: "prison-entertainment",
+    title: "Rehabilitation Through Entertainment",
+    movie: "Prisoners drive Monster Trucks at 'Monday Night Rehabilitation' for the cheering crowds.",
+    trend: "rising",
+    stars: [
+      { pct: 38, date: "Jun 2014",
+        title: "Jeremy Meeks — the 'hot felon' — lands a modeling contract from his mugshot",
+        source: "Wikipedia", url: "https://en.wikipedia.org/wiki/Jeremy_Meeks" },
+      { pct: 52, date: "2018–present",
+        title: "True crime is the #1 podcast genre in the US for 6+ years running",
+        source: "Wikipedia", url: "https://en.wikipedia.org/wiki/True_crime" },
+      { pct: 66, date: "Nov 22, 2023",
+        title: "Squid Game: The Challenge — real people compete in the show's dystopian games",
+        source: "Wikipedia", url: "https://en.wikipedia.org/wiki/Squid_Game:_The_Challenge" },
+      { pct: 73, date: "2022–present",
+        title: "Jan 6 rioters run for Congress; mugshots become campaign merchandise",
+        source: "AP News", url: "https://apnews.com/article/jan-6-capitol-riot-defendants-congress-elections-0d60d7fbb8b8842bb3c3d547cb1c0b3b" }
+    ]
+  },
+  {
+    id: "liquid-food",
+    title: "Food is just colored liquid",
+    movie: "Meals come in buckets of grey slurry. Beef-A-Reeno: 'It's what you crave.'",
+    trend: "rising",
+    stars: [
+      { pct: 40, date: "May 14, 2013",
+        title: "Soylent launches — a beige liquid designed to replace all meals",
+        source: "Wikipedia", url: "https://en.wikipedia.org/wiki/Soylent_(meal_replacement)" },
+      { pct: 55, date: "2019–present",
+        title: "Huel, Ka'Chava, and liquid-meal brands become a multi-billion-dollar category",
+        source: "Wikipedia — Huel", url: "https://en.wikipedia.org/wiki/Huel" },
+      { pct: 66, date: "Aug 7, 2019",
+        title: "BMJ: 60% of US daily calories come from ultra-processed foods",
+        source: "BMJ", url: "https://www.bmj.com/content/365/bmj.l1451" },
+      { pct: 71, date: "Oct 2023",
+        title: "Snack-food makers report demand collapse attributed to GLP-1 drug surge",
+        source: "WSJ", url: "https://www.wsj.com/business/retail/ozempic-snack-food-sales-nestle-walmart-a2f6ba33" }
+    ]
+  },
+  {
+    id: "mass-debaters",
+    title: "'Batin': mass-scale doomscroll entertainment",
+    movie: "On a commercial break: 'Go away, batin'!' Public mass-masturbation is a product category.",
+    trend: "rising",
+    stars: [
+      { pct: 42, date: "2019–present",
+        title: "Pornhub consistently ranks among the world's top 15 most-visited websites",
+        source: "Wikipedia — Pornhub", url: "https://en.wikipedia.org/wiki/Pornhub" },
+      { pct: 56, date: "Nov 23, 2020",
+        title: "Oxford lists 'doomscrolling' as a 2020 Word of the Year finalist",
+        source: "Wikipedia", url: "https://en.wikipedia.org/wiki/Doomscrolling" },
+      { pct: 68, date: "Oct 25, 2021",
+        title: "Leaked memos: Instagram explicitly optimizes for watch-time over wellbeing",
+        source: "Wikipedia — Facebook Papers", url: "https://en.wikipedia.org/wiki/Facebook_Papers" },
+      { pct: 75, date: "Dec 11, 2023",
+        title: "Pew: half of US teens report being online 'almost constantly'",
+        source: "Pew Research", url: "https://www.pewresearch.org/internet/2023/12/11/teens-social-media-and-technology-2023/" }
+    ]
   }
 ];
