@@ -26,6 +26,12 @@ function verdictFor(total) {
   return "Welcome to Costco. I love you.";
 }
 
+const TREND_META = {
+  rising: { glyph: "▲", label: "Rising",  className: "trend-rising"  },
+  stable: { glyph: "▶", label: "Stable",  className: "trend-stable"  },
+  easing: { glyph: "▼", label: "Easing",  className: "trend-easing"  }
+};
+
 function renderTell(tell, index) {
   const score = scoreFor(tell);
   const starsHtml = tell.stars.map((star, i) => {
@@ -45,9 +51,17 @@ function renderTell(tell, index) {
     </button>`;
   }).join("");
 
+  const trend = TREND_META[tell.trend] || TREND_META.stable;
+
   return `
     <article class="tell" id="${tell.id}" data-score="${score}">
-      <div class="idx">TELL #${String(index + 1).padStart(2, "0")}</div>
+      <div class="tell-head">
+        <div class="idx">TELL #${String(index + 1).padStart(2, "0")}</div>
+        <div class="trend ${trend.className}" title="Trend: ${trend.label}">
+          <span class="g" aria-hidden="true">${trend.glyph}</span>
+          <span class="l">${trend.label}</span>
+        </div>
+      </div>
       <h2>${escapeHtml(tell.title)}</h2>
       <p class="quote">"${escapeHtml(tell.movie)}"</p>
 
@@ -194,8 +208,41 @@ function init() {
   document.querySelectorAll(".tell").forEach(t => io.observe(t));
 
   wireStars();
+  wireSubmitButton();
 
   document.getElementById("verdict").textContent = verdictFor(total);
+}
+
+// Pre-fill a GitHub issue when the user clicks "SUBMIT A STAR".
+function wireSubmitButton() {
+  const btn = document.getElementById("submit-star");
+  if (!btn) return;
+  const tellList = TELLS.map(t => `  - ${t.id}: ${t.title}`).join("\n");
+  const body = [
+    "### Which tell does this star belong to?",
+    "_Pick one id from below, or suggest a new tell:_",
+    tellList,
+    "",
+    "### News URL",
+    "<paste link>",
+    "",
+    "### Source (e.g. BBC, Reuters, NYT, Wikipedia)",
+    "",
+    "### Date of the event",
+    "e.g. \"Feb 28, 2024\" or \"2023–present\"",
+    "",
+    "### One-line headline (as it will appear on the page)",
+    "",
+    "### Proposed score (0–100) — how far along the indicator is this?",
+    "",
+    "### Why this belongs",
+    ""
+  ].join("\n");
+  const url = "https://github.com/Leitet/idiocracy/issues/new?" +
+    "labels=star-submission" +
+    "&title=" + encodeURIComponent("[Star] ") +
+    "&body=" + encodeURIComponent(body);
+  btn.href = url;
 }
 
 document.addEventListener("DOMContentLoaded", init);

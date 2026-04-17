@@ -3,14 +3,15 @@
 // Stars use absolute positions on a 0-100 scale. The tell's score = the highest star.
 // Total score = average of all tell scores.
 //
-// `date` is a human-readable string: "Mar 5, 2024", "Sep 2023", "2015–present".
-// URLs point to primary sources — Wikipedia, major news outlets, government agencies.
+// `trend` is editorial: "rising" (getting worse), "stable", or "easing" (improving).
+// `date` is a human string: "Mar 5, 2024", "Sep 2023", "2015–present".
 
 const TELLS = [
   {
     id: "brawndo",
     title: "Use sports drinks to water crops",
     movie: "Brawndo — It's got what plants crave. It's got electrolytes.",
+    trend: "rising",
     stars: [
       { pct: 22, date: "Oct 2013",
         title: "Brawndo trademarked and sold as a real-world energy drink",
@@ -30,6 +31,7 @@ const TELLS = [
     id: "wrestler-president",
     title: "Wrestler / entertainer becomes head of state",
     movie: "President Dwayne Elizondo Mountain Dew Herbert Camacho — five-time ultimate smackdown champion.",
+    trend: "rising",
     stars: [
       { pct: 35, date: "Nov 3, 1998",
         title: "Jesse 'The Body' Ventura elected Governor of Minnesota",
@@ -49,6 +51,7 @@ const TELLS = [
     id: "ow-my-balls",
     title: "'Ow! My Balls!' is what passes for entertainment",
     movie: "The #1 show in 2505 is a man getting hit in the groin. For 90 minutes.",
+    trend: "rising",
     stars: [
       { pct: 40, date: "1989–present",
         title: "America's Funniest Home Videos builds a 30-year empire on groin-injury clips",
@@ -68,6 +71,7 @@ const TELLS = [
     id: "costco-everything",
     title: "Costco sells everything, including law degrees",
     movie: "Welcome to Costco. I love you.",
+    trend: "stable",
     stars: [
       { pct: 30, date: "2010–present",
         title: "Costco sells engagement rings, coffins, and vacation packages",
@@ -87,6 +91,7 @@ const TELLS = [
     id: "corporate-everything",
     title: "Corporate logos replace public life",
     movie: "Carl's Jr. — Fuck you, I'm eating.",
+    trend: "stable",
     stars: [
       { pct: 45, date: "1990–present",
         title: "Stadium naming rights: venues renamed every few years to the highest bidder",
@@ -106,6 +111,7 @@ const TELLS = [
     id: "anti-intellect",
     title: "Anti-intellectualism becomes mainstream",
     movie: "You talk like a fag, and your shit's all retarded.",
+    trend: "rising",
     stars: [
       { pct: 38, date: "2015–present",
         title: "Modern flat-Earth beliefs surge in the streaming era",
@@ -125,6 +131,7 @@ const TELLS = [
     id: "language-decay",
     title: "Vocabulary collapses to grunts and brands",
     movie: "A hybrid of hillbilly, valley girl, inner-city slang, and various grunts.",
+    trend: "rising",
     stars: [
       { pct: 33, date: "Nov 17, 2015",
         title: "Oxford Word of the Year is an emoji: 😂 Face with Tears of Joy",
@@ -144,6 +151,7 @@ const TELLS = [
     id: "medical-buttons",
     title: "Medicine by cartoon buttons",
     movie: "Hospital diagnosis is pressing a picture of a body part. A computer reads your tattoo.",
+    trend: "rising",
     stars: [
       { pct: 41, date: "Jul 2019",
         title: "Self-service kiosks replace ER triage in parts of the US hospital system",
@@ -163,6 +171,7 @@ const TELLS = [
     id: "garbage-avalanche",
     title: "Garbage reaches structural-hazard levels",
     movie: "A garbage landslide buries a city.",
+    trend: "rising",
     stars: [
       { pct: 44, date: "2018",
         title: "Great Pacific Garbage Patch measured at ~1.6 million km² — twice the size of Texas",
@@ -182,6 +191,7 @@ const TELLS = [
     id: "smart-stop-breeding",
     title: "The smart stop reproducing",
     movie: "Opening montage: PhDs delay kids forever while a trailer dynasty explodes.",
+    trend: "rising",
     stars: [
       { pct: 47, date: "Feb 28, 2024",
         title: "South Korea fertility rate drops to 0.72 — lowest in recorded history",
@@ -195,6 +205,89 @@ const TELLS = [
       { pct: 81, date: "1990–present",
         title: "Italy, Spain, Greece sub-replacement for 3+ decades running",
         source: "Eurostat", url: "https://ec.europa.eu/eurostat/statistics-explained/index.php?title=Fertility_statistics" }
+    ]
+  },
+
+  // ---------- NEW TELLS ----------
+
+  {
+    id: "tattoo-id",
+    title: "Your tattoo IS your ID",
+    movie: "Joe's arm barcode gets scanned at every checkpoint. No scan, no service.",
+    trend: "rising",
+    stars: [
+      { pct: 36, date: "Jan 18, 2020",
+        title: "Clearview AI scrapes 3B+ photos for facial-recognition database",
+        source: "NYT", url: "https://www.nytimes.com/2020/01/18/technology/clearview-privacy-facial-recognition.html" },
+      { pct: 55, date: "2014–present",
+        title: "China's Social Credit System — camera-graded citizens, blacklists",
+        source: "Wikipedia", url: "https://en.wikipedia.org/wiki/Social_Credit_System" },
+      { pct: 68, date: "Jul 24, 2023",
+        title: "Worldcoin launches iris-scanning 'Orb' for global biometric ID",
+        source: "Wikipedia", url: "https://en.wikipedia.org/wiki/Worldcoin" },
+      { pct: 75, date: "2023–present",
+        title: "TSA facial-recognition at 30+ US airports; opt-out pressure reported",
+        source: "Wikipedia — TSA", url: "https://en.wikipedia.org/wiki/Transportation_Security_Administration#Biometrics" }
+    ]
+  },
+  {
+    id: "iq-falling",
+    title: "Measured IQ starts falling",
+    movie: "500 years of dumbing down. The smartest man alive is merely average.",
+    trend: "rising",
+    stars: [
+      { pct: 40, date: "Jun 11, 2018",
+        title: "Norway study: IQ scores have declined since the mid-1970s",
+        source: "PNAS", url: "https://www.pnas.org/doi/10.1073/pnas.1718793115" },
+      { pct: 55, date: "Mar 9, 2023",
+        title: "Northwestern study finds first IQ declines in the US since scoring began",
+        source: "Intelligence journal", url: "https://www.sciencedirect.com/science/article/abs/pii/S0160289623000132" },
+      { pct: 66, date: "Oct 24, 2022",
+        title: "NAEP: US 4th/8th-grade math and reading scores see largest drops ever recorded",
+        source: "NCES / NAEP", url: "https://www.nationsreportcard.gov/highlights/mathematics/2022/" },
+      { pct: 72, date: "2023",
+        title: "PISA (OECD): pandemic-era decline across reading, math, and science in most countries",
+        source: "OECD", url: "https://www.oecd.org/pisa/publications/pisa-2022-results.htm" }
+    ]
+  },
+  {
+    id: "museum-revisionism",
+    title: "The museum is confidently wrong",
+    movie: "A history exhibit claims Einstein invented gravity. A guide calls a cave 'where Jesus was born'.",
+    trend: "rising",
+    stars: [
+      { pct: 42, date: "May 28, 2007",
+        title: "Creation Museum opens in Kentucky — shows humans coexisting with dinosaurs",
+        source: "Wikipedia", url: "https://en.wikipedia.org/wiki/Creation_Museum" },
+      { pct: 57, date: "Jul 7, 2016",
+        title: "Ark Encounter — full-scale Noah's Ark theme park — opens as historical exhibit",
+        source: "Wikipedia", url: "https://en.wikipedia.org/wiki/Ark_Encounter" },
+      { pct: 65, date: "Nov 17, 2017",
+        title: "Flat Earth International Conference draws hundreds to 'disprove NASA'",
+        source: "Wikipedia", url: "https://en.wikipedia.org/wiki/Flat_Earth_International_Conference" },
+      { pct: 73, date: "2020–present",
+        title: "TikTok 'hidden history' pseudo-documentaries outperform accredited sources",
+        source: "Wikipedia — Misinformation on TikTok", url: "https://en.wikipedia.org/wiki/Misinformation_related_to_TikTok" }
+    ]
+  },
+  {
+    id: "sexualized-everything",
+    title: "Starbucks offers 'full body lattes'",
+    movie: "Routine services at mainstream chains are explicitly sexual.",
+    trend: "rising",
+    stars: [
+      { pct: 44, date: "2016–present",
+        title: "OnlyFans grows to 3M+ creators; $6.6B GMV by 2023",
+        source: "Wikipedia — OnlyFans", url: "https://en.wikipedia.org/wiki/OnlyFans" },
+      { pct: 58, date: "2021–present",
+        title: "Mainstream actors and athletes migrate to creator-content platforms",
+        source: "Wikipedia — Creator economy", url: "https://en.wikipedia.org/wiki/Creator_economy" },
+      { pct: 66, date: "2022–present",
+        title: "Thirst-trap aesthetics dominate brand marketing on TikTok/Instagram",
+        source: "Wikipedia — Thirst trap", url: "https://en.wikipedia.org/wiki/Thirst_trap" },
+      { pct: 70, date: "Oct 2023",
+        title: "AI companion apps (Replika, Character.ai) pivot to paid romantic roleplay",
+        source: "Wikipedia — Replika", url: "https://en.wikipedia.org/wiki/Replika" }
     ]
   }
 ];

@@ -210,9 +210,16 @@ a:hover { color: var(--brawndo); }
   box-shadow: 0 4px 30px rgba(0,0,0,0.5);
 }
 
-.tell .idx {
+.tell-head {
   position: absolute;
-  top: -14px; left: 14px;
+  top: -14px; left: 14px; right: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+}
+.tell-head > * { pointer-events: auto; }
+.tell .idx {
   background: var(--brawndo);
   color: var(--ink);
   font-family: 'Bungee', sans-serif;
@@ -220,6 +227,50 @@ a:hover { color: var(--brawndo); }
   letter-spacing: 0.15em;
   padding: 3px 10px;
   border-radius: 2px;
+}
+
+.trend {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 10px;
+  border-radius: 2px;
+  font-family: 'Bungee', sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  line-height: 1;
+  border: 1px solid;
+}
+.trend .g { font-size: 11px; transform: translateY(-1px); }
+
+.trend-rising {
+  color: var(--blood);
+  border-color: var(--blood);
+  background: rgba(255, 42, 42, 0.08);
+}
+.trend-rising .g { animation: nudgeUp 1.6s ease-in-out infinite; }
+
+.trend-stable {
+  color: var(--hazard);
+  border-color: var(--hazard);
+  background: rgba(255, 212, 0, 0.06);
+}
+
+.trend-easing {
+  color: var(--brawndo);
+  border-color: var(--brawndo);
+  background: rgba(199, 255, 31, 0.08);
+}
+.trend-easing .g { animation: nudgeDown 1.6s ease-in-out infinite; }
+
+@keyframes nudgeUp {
+  0%, 100% { transform: translateY(-1px); }
+  50%      { transform: translateY(-4px); }
+}
+@keyframes nudgeDown {
+  0%, 100% { transform: translateY(-1px); }
+  50%      { transform: translateY(2px); }
 }
 
 .tell h2 {
@@ -457,6 +508,38 @@ footer {
   color: #6b7378;
   line-height: 1.6;
 }
+
+.submit-wrap {
+  margin: 10px 0 28px;
+}
+.submit-star {
+  display: inline-block;
+  background: var(--brawndo);
+  color: var(--ink);
+  font-family: 'Bungee', sans-serif;
+  font-size: 14px;
+  letter-spacing: 0.22em;
+  padding: 14px 22px;
+  border-radius: 3px;
+  text-decoration: none;
+  box-shadow: 0 0 22px rgba(199,255,31,0.45);
+  transition: transform .15s ease, box-shadow .15s ease, background .15s;
+}
+.submit-star:hover,
+.submit-star:focus-visible {
+  transform: translateY(-2px);
+  background: var(--hazard);
+  color: var(--ink);
+  box-shadow: 0 0 28px rgba(255,212,0,0.7);
+  outline: none;
+}
+.submit-hint {
+  font-size: 12px;
+  color: #8a9096;
+  margin-top: -6px;
+  margin-bottom: 22px;
+}
+
 footer .carls {
   display: inline-block;
   margin-top: 12px;
