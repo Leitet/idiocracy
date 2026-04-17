@@ -28,20 +28,25 @@ function verdictFor(total) {
 
 function renderTell(tell, index) {
   const score = scoreFor(tell);
-  const starsHtml = tell.stars.map(star => `
-    <a class="star" href="${escapeHtml(star.url)}" target="_blank" rel="noopener noreferrer"
-       style="left:${star.pct}%"
-       data-pct="${star.pct}">
+  const starsHtml = tell.stars.map((star, i) => {
+    const id = `star-${tell.id}-${i}`;
+    return `
+    <button class="star" type="button"
+            id="${id}"
+            style="left:${star.pct}%"
+            data-pct="${star.pct}"
+            data-tell="${tell.id}"
+            data-star-idx="${i}"
+            aria-expanded="false"
+            aria-controls="detail-${tell.id}"
+            aria-label="${escapeHtml(star.title)}"
+            title="${escapeHtml(star.title)}">
       ${STAR_SVG}
-      <div class="card">
-        <span class="src">${escapeHtml(star.source)}</span>
-        <div class="t">${escapeHtml(star.title)}</div>
-      </div>
-    </a>
-  `).join("");
+    </button>`;
+  }).join("");
 
   return `
-    <article class="tell" data-score="${score}">
+    <article class="tell" id="${tell.id}" data-score="${score}">
       <div class="idx">TELL #${String(index + 1).padStart(2, "0")}</div>
       <h2>${escapeHtml(tell.title)}</h2>
       <p class="quote">"${escapeHtml(tell.movie)}"</p>
@@ -51,7 +56,7 @@ function renderTell(tell, index) {
           <div class="fill" data-target="${score}"></div>
           ${starsHtml}
         </div>
-        <div class="scale">
+        <div class="scale" aria-hidden="true">
           <span>0</span><span>25</span><span>50</span><span>75</span><span>100</span>
         </div>
       </div>
@@ -60,8 +65,86 @@ function renderTell(tell, index) {
         <span>CURRENT READING</span>
         <span class="score"><span class="score-num" data-target="${score}">0</span>%</span>
       </div>
+
+      <div class="detail" id="detail-${tell.id}" role="region" aria-live="polite" hidden>
+        <!-- populated on star click -->
+      </div>
     </article>
   `;
+}
+
+function renderDetail(star) {
+  return `
+    <div class="detail-inner">
+      <div class="detail-head">
+        <span class="src">${escapeHtml(star.source)}</span>
+        <span class="date">${escapeHtml(star.date || "")}</span>
+        <span class="pct">@ ${star.pct}%</span>
+      </div>
+      <div class="t">${escapeHtml(star.title)}</div>
+      <a class="read" href="${escapeHtml(star.url)}" target="_blank" rel="noopener noreferrer">
+        Read source <span aria-hidden="true">↗</span>
+      </a>
+    </div>
+  `;
+}
+
+function closeAllDetails(except) {
+  document.querySelectorAll(".tell").forEach(tell => {
+    if (tell === except) return;
+    const panel = tell.querySelector(".detail");
+    if (panel && !panel.hidden) {
+      panel.classList.remove("open");
+      panel.hidden = true;
+      panel.innerHTML = "";
+    }
+    tell.querySelectorAll(".star[aria-expanded='true']")
+        .forEach(s => s.setAttribute("aria-expanded", "false"));
+  });
+}
+
+function wireStars() {
+  document.addEventListener("click", (e) => {
+    const star = e.target.closest(".star");
+    if (!star) {
+      // Click outside any star → close all.
+      if (!e.target.closest(".detail")) closeAllDetails(null);
+      return;
+    }
+    e.preventDefault();
+
+    const tellEl = star.closest(".tell");
+    const tellId = star.dataset.tell;
+    const idx = Number(star.dataset.starIdx);
+    const tell = TELLS.find(t => t.id === tellId);
+    const starData = tell.stars[idx];
+
+    const panel = tellEl.querySelector(".detail");
+    const wasOpen = star.getAttribute("aria-expanded") === "true";
+
+    // Close other tells' panels.
+    closeAllDetails(tellEl);
+    // Collapse other stars in this tell.
+    tellEl.querySelectorAll(".star").forEach(s => s.setAttribute("aria-expanded", "false"));
+
+    if (wasOpen) {
+      panel.classList.remove("open");
+      panel.hidden = true;
+      panel.innerHTML = "";
+      return;
+    }
+
+    panel.innerHTML = renderDetail(starData);
+    panel.hidden = false;
+    // Let the browser paint `hidden=false` first so the transition can animate.
+    requestAnimationFrame(() => panel.classList.add("open"));
+    star.setAttribute("aria-expanded", "true");
+  });
+
+  // Esc closes any open detail.
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeAllDetails(null);
+  });
 }
 
 function animateNumber(el, target, duration = 1600) {
@@ -80,30 +163,21 @@ function init() {
   const tellsRoot = document.getElementById("tells");
   tellsRoot.innerHTML = TELLS.map(renderTell).join("");
 
-  // Total score = average of all tell scores.
   const total = Math.round(
     TELLS.reduce((sum, t) => sum + scoreFor(t), 0) / TELLS.length
   );
 
-  // Animate the hero number.
-  const totalNumEl = document.getElementById("total-num");
-  animateNumber(totalNumEl, total, 2400);
+  animateNumber(document.getElementById("total-num"), total, 2400);
 
-  // Fill bars + light up stars + count up per-tell score using an intersection observer
-  // so it feels like each panel "comes online" as you scroll.
   const io = new IntersectionObserver(entries => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       const tell = entry.target;
       const fill = tell.querySelector(".fill");
       const target = Number(fill.dataset.target);
-      requestAnimationFrame(() => {
-        fill.style.width = target + "%";
-      });
+      requestAnimationFrame(() => { fill.style.width = target + "%"; });
 
-      // Light the stars at staggered intervals
       const stars = tell.querySelectorAll(".star");
-      // sort by pct so they pop in left-to-right
       [...stars]
         .sort((a, b) => Number(a.dataset.pct) - Number(b.dataset.pct))
         .forEach((s, i) => {
@@ -119,7 +193,8 @@ function init() {
 
   document.querySelectorAll(".tell").forEach(t => io.observe(t));
 
-  // Verdict text
+  wireStars();
+
   document.getElementById("verdict").textContent = verdictFor(total);
 }
 
